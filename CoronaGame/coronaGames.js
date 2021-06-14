@@ -4,126 +4,128 @@ let renderer = new THREE.WebGLRenderer({
     antialias: true
 });
 
-scene.background = new THREE.Color('#fafafa');
+scene.background = new THREE.Color('0xfafafa');
 renderer.setSize(innerWidth, innerHeight);
 document.body.appendChild(renderer.domElement);
 
-cam.position.z = 50;
-cam.position.y = 30;
+cam.position.z = 25;
+cam.position.y = 10;
+
+
+let virus_loader1 = new THREE.GLTFLoader();
+virus_loader1.load("Virus-1/scene.gltf",function(gltf){
+    virus_1 = gltf.scene;
+    virus_1.scale.set(0.005,0.005,0.005);
+    virus_1.position.set(0,1,0);
+    scene.add(virus_1);
+});
 
 let loader = new THREE.GLTFLoader();
-loader.load("Virus-1/scene.gltf",function(gltf){
-    virus_1 = gltf.scene;
-    virus_1.scale.set(0.1,0.1,0.1);
-    scene.add(virus_1);
+loader.load("Person/scene.gltf",function(gltf){
+    person = gltf.scene;
+    person.scale.set(0.01,0.01,0.01);
+    person.position.set(0,0.1,10);
+    scene.add(person);
 });
 
 
 let controls = new THREE.OrbitControls(cam, renderer.domElement);
 
-// Point Light
-var pointLight = new THREE.PointLight(0xff0000, 1, 100);
-pointLight.position.set(0, 2, 2);
-scene.add(pointLight);
-// Point Light Helper
-scene.add(new THREE.PointLightHelper(pointLight, 2.0, 0xff0000));
+const plane = new THREE.PlaneGeometry(30,30,1);
+const grass_texture = new THREE.TextureLoader().load('./texture/rumput.jpg');
+
+const mat_rumput = new THREE.MeshPhongMaterial({
+    map:grass_texture
+});
+
+let mesh_plane = new THREE.Mesh(plane,mat_rumput);
+mesh_plane.position.set(0,0,0);
+scene.add(mesh_plane);
+mesh_plane.rotation.x-=Math.PI/2;
+
+//LIGHT
+let light1 = new THREE.PointLight(0xffffff,0.5);
+light1.position.set(-15,15,-15);
+scene.add(light1);
+scene.add(new THREE.PointLightHelper(light1, 1.0, 0x0000ff));
+
+let light2 = new THREE.PointLight(0xffffff,0.5);
+light2.position.set(-15,15,15);
+scene.add(light2);
+scene.add(new THREE.PointLightHelper(light2, 1.0, 0x0000ff));
+
+let light3 = new THREE.PointLight(0xffffff,0.5);
+light3.position.set(15,15,15);
+scene.add(light3);
+scene.add(new THREE.PointLightHelper(light3, 1.0, 0x0000ff));
+
+let light4 = new THREE.PointLight(0xffffff,0.5);
+light4.position.set(15,15,-15);
+scene.add(light4);
+scene.add(new THREE.PointLightHelper(light4, 1.0, 0x0000ff));
+
+let light5 = new THREE.PointLight(0xffffff,0.5);
+light5.position.set(15,-15,15);
+scene.add(light5);
+scene.add(new THREE.PointLightHelper(light5, 1.0, 0x0000ff));
+
+let light6 = new THREE.PointLight(0xffffff,0.5);
+light6.position.set(15,-15,-15);
+scene.add(light6);
+scene.add(new THREE.PointLightHelper(light6, 1.0, 0x0000ff));
+
+let light7 = new THREE.PointLight(0xffffff,0.5);
+light7.position.set(-15,-15,15);
+scene.add(light7);
+scene.add(new THREE.PointLightHelper(light7, 1.0, 0x0000ff));
+
+let light8 = new THREE.PointLight(0xffffff,0.5);
+light8.position.set(-15,-15,-15);
+scene.add(light8);
+scene.add(new THREE.PointLightHelper(light8, 1.0, 0x0000ff));
+
 
 // Controller
+let posisi='depan'
 document.addEventListener('keydown', function (event) {
     // ATAS = W
     if (event.keyCode == 87) {
-        ctx.clearRect(0, 0, canvasKita.width, canvasKita.height);
-        imageDataSaya = ctx.getImageData(0, 0, canvasKita.width, canvasKita.height);
-
         console.log("W");
-        console.log(array);
-        array = translasi_array(array, { x: 0, y: - 10 });
-        Polygon(imageDataSaya, array, 0, 0, 0);
-        ctx.putImageData(imageDataSaya, 0, 0);
+        person.position.z-=1.5;
+        
     }
 
     // KIRI = A
     else if (event.keyCode == 65) {
-        ctx.clearRect(0, 0, canvasKita.width, canvasKita.height);
-        imageDataSaya = ctx.getImageData(0, 0, canvasKita.width, canvasKita.height);
-
         console.log("A");
-        console.log(array);
-        array = translasi_array(array, { x: - 10, y: 0 });
-        Polygon(imageDataSaya, array, 0, 0, 0);
-        ctx.putImageData(imageDataSaya, 0, 0);
+        person.position.x-=1.5;
+        
     }
 
     // BAWAH = S
     else if (event.keyCode == 83) {
-        ctx.clearRect(0, 0, canvasKita.width, canvasKita.height);
-        imageDataSaya = ctx.getImageData(0, 0, canvasKita.width, canvasKita.height);
-
         console.log("S");
-        console.log(array);
-        array = translasi_array(array, { x: 0, y: 10 });
-        Polygon(imageDataSaya, array, 0, 0, 0);
-        ctx.putImageData(imageDataSaya, 0, 0);
+        person.position.z+=1.5;
+        
     }
 
     // KANAN = D
     else if (event.keyCode == 68) {
-        ctx.clearRect(0, 0, canvasKita.width, canvasKita.height);
-        imageDataSaya = ctx.getImageData(0, 0, canvasKita.width, canvasKita.height);
-
         console.log("D");
-        console.log(array);
-        array = translasi_array(array, { x: 10, y: 0 });
-        Polygon(imageDataSaya, array, 0, 0, 0);
-        ctx.putImageData(imageDataSaya, 0, 0);
+        person.position.x+=1.5;
+        
     }
 
     // ROTATE KIRI = Q
     else if (event.keyCode == 81) {
-        ctx.clearRect(0, 0, canvasKita.width, canvasKita.height);
-        imageDataSaya = ctx.getImageData(0, 0, canvasKita.width, canvasKita.height);
-
-        console.log("Q");
-        console.log(array);
-        array = rotasi_array(array, array[3], 0.1);
-        Polygon(imageDataSaya, array, 0, 0, 0);
-        ctx.putImageData(imageDataSaya, 0, 0);
+        person.rotation.y-=Math.PI/2;
+        console.log(person.rotation.y);
     }
 
     // ROTATE KANAN= E
     else if (event.keyCode == 69) {
-        ctx.clearRect(0, 0, canvasKita.width, canvasKita.height);
-        imageDataSaya = ctx.getImageData(0, 0, canvasKita.width, canvasKita.height);
-
-        console.log("E");
-        console.log(array);
-        array = rotasi_array(array, array[3], - 0.1);
-        Polygon(imageDataSaya, array, 0, 0, 0);
-        ctx.putImageData(imageDataSaya, 0, 0);
-    }
-
-    // SCALE BESAR = Z
-    else if (event.keyCode == 90) {
-        ctx.clearRect(0, 0, canvasKita.width, canvasKita.height);
-        imageDataSaya = ctx.getImageData(0, 0, canvasKita.width, canvasKita.height);
-
-        console.log("Z");
-        console.log(array);
-        array = skala_array(array, array[3], { x: 1.5, y: 1.5 });
-        Polygon(imageDataSaya, array, 0, 0, 0);
-        ctx.putImageData(imageDataSaya, 0, 0);
-    }
-
-    // SCALE KECIL = C 
-    else if (event.keyCode == 67) {
-        ctx.clearRect(0, 0, canvasKita.width, canvasKita.height);
-        imageDataSaya = ctx.getImageData(0, 0, canvasKita.width, canvasKita.height);
-
-        console.log("C");
-        console.log(array);
-        array = skala_array(array, array[3], { x: 1 / 2, y: 1 / 2 });
-        Polygon(imageDataSaya, array, 0, 0, 0);
-        ctx.putImageData(imageDataSaya, 0, 0);
+        person.rotation.y+=Math.PI/2;
+        console.log(person.rotation.y);
     }
 })
 
