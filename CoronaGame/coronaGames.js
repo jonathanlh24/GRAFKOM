@@ -1,3 +1,4 @@
+
 let scene = new THREE.Scene();
 let cam = new THREE.PerspectiveCamera(45, innerWidth / innerHeight, 1, 100);
 let renderer = new THREE.WebGLRenderer({
@@ -11,20 +12,46 @@ document.body.appendChild(renderer.domElement);
 cam.position.z = 25;
 cam.position.y = 10;
 
+const color = new THREE.Color( 0x00ff00 );
+
 
 let virus_loader1 = new THREE.GLTFLoader();
 virus_loader1.load("Virus-1/scene.gltf",function(gltf){
     virus_1 = gltf.scene;
-    virus_1.scale.set(0.005,0.005,0.005);
-    virus_1.position.set(0,1,0);
+    virus_1.scale.set(0.01,0.01,0.01);
+    virus_1.position.set(0,1,10);
     scene.add(virus_1);
+});
+
+let virus_loader2 = new THREE.GLTFLoader();
+virus_loader2.load("Virus-1/scene.gltf",function(gltf){
+    virus_2 = gltf.scene;
+    virus_2.scale.set(0.01,0.01,0.01);
+    virus_2.position.set(0,1,5);
+    scene.add(virus_2);
+});
+
+let virus_loader3 = new THREE.GLTFLoader();
+virus_loader3.load("Virus-1/scene.gltf",function(gltf){
+    virus_3 = gltf.scene;
+    virus_3.scale.set(0.01,0.01,0.01);
+    virus_3.position.set(0,1,0);
+    scene.add(virus_3);
+});
+
+let virus_loader4 = new THREE.GLTFLoader();
+virus_loader4.load("Virus-1/scene.gltf",function(gltf){
+    virus_4 = gltf.scene;
+    virus_4.scale.set(0.01,0.01,0.01);
+    virus_4.position.set(0,1,-5);
+    scene.add(virus_4);
 });
 
 let loader = new THREE.GLTFLoader();
 loader.load("Person/scene.gltf",function(gltf){
     person = gltf.scene;
     person.scale.set(0.01,0.01,0.01);
-    person.position.set(0,0.1,10);
+    person.position.set(0,0.1,13);
     scene.add(person);
 });
 
@@ -32,11 +59,21 @@ loader.load("Person/scene.gltf",function(gltf){
 let controls = new THREE.OrbitControls(cam, renderer.domElement);
 
 const plane = new THREE.PlaneGeometry(30,30,1);
+const checkpoint = new THREE.PlaneGeometry(30,5,5);
 const grass_texture = new THREE.TextureLoader().load('./texture/rumput.jpg');
+
+const mat_checkpoint = new THREE.MeshBasicMaterial({
+    color:0x00ff00
+})
 
 const mat_rumput = new THREE.MeshPhongMaterial({
     map:grass_texture
 });
+
+let mesh_checkpoint = new THREE.Mesh(checkpoint,mat_checkpoint);
+mesh_checkpoint.position.set(0,0.05,-15);
+scene.add(mesh_checkpoint);
+mesh_checkpoint.rotation.x-=Math.PI/2;
 
 let mesh_plane = new THREE.Mesh(plane,mat_rumput);
 mesh_plane.position.set(0,0,0);
@@ -118,13 +155,13 @@ document.addEventListener('keydown', function (event) {
 
     // ROTATE KIRI = Q
     else if (event.keyCode == 81) {
-        person.rotation.y-=Math.PI/2;
+        person.rotation.y+=Math.PI/2;
         console.log(person.rotation.y);
     }
 
     // ROTATE KANAN= E
     else if (event.keyCode == 69) {
-        person.rotation.y+=Math.PI/2;
+        person.rotation.y-=Math.PI/2;
         console.log(person.rotation.y);
     }
 })
@@ -132,6 +169,22 @@ document.addEventListener('keydown', function (event) {
 function draw() {
     requestAnimationFrame(draw);
     renderer.render(scene, cam);
+    let checker="kanan";
+    let posisi=virus_1.position.x;
+    if(checker=="kanan"){
+        if(posisi>10){
+            checker="kiri";
+        }else{
+            virus_1.position.x+=0.1;
+        }
+    }else if (checker=="kiri" ){
+        if(posisi<5){
+            checker="kanan";
+        }else{
+            virus_1.position.x-=0.1;
+        }
+    }
+    console.log(checker)
 }
 
 draw();
