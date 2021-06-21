@@ -9,7 +9,7 @@ scene.background = new THREE.Color(0x000000);
 renderer.setSize(innerWidth, innerHeight);
 document.body.appendChild(renderer.domElement);
 
-cam.position.z = 30;
+cam.position.z = 35;
 cam.position.y = 20;
 
 var person = new THREE.Object3D();
@@ -18,11 +18,17 @@ var virus_2 = new THREE.Object3D();
 var virus_3 = new THREE.Object3D();
 var virus_4 = new THREE.Object3D();
 
+
+var mixer = new THREE.AnimationMixer(person);
+const clock = new THREE.Clock();
+var speed = 0;
+let i = 0;
+
 const color = new THREE.Color(0x00ff00);
 
-let grid = new THREE.GridHelper(30,7, 0x000000, 0x000000);
-grid.position.set(0,0,0);
-scene.add(grid);
+// let grid = new THREE.GridHelper(35,8, 0x000000, 0x000000);
+// grid.position.set(0,0,0);
+// scene.add(grid);
 
 let virus_loader1 = new THREE.GLTFLoader();
 virus_loader1.load("Virus-1/scene.gltf", function (gltf) {
@@ -59,9 +65,12 @@ virus_loader4.load("Virus-1/scene.gltf", function (gltf) {
 let loader = new THREE.GLTFLoader();
 loader.load("Person/scene.gltf", function (gltf) {
     person = gltf.scene;
-    person.scale.set(0.01, 0.01, 0.01);
+    person.scale.set(0.018, 0.018, 0.018);
     person.position.set(0, 0.1, 15);
     scene.add(person);
+    mixer = new THREE.AnimationMixer(gltf.scene);
+    var action = mixer.clipAction(gltf.animations[0]);
+    action.play();
 });
 
 
@@ -69,9 +78,9 @@ let controls = new THREE.OrbitControls(cam, renderer.domElement);
 controls.update();
 controls.enabled = false;
 
-const plane = new THREE.PlaneGeometry(30, 30, 1);
-const checkpoint = new THREE.PlaneGeometry(30, 5, 5);
-const tanah = new THREE.BoxGeometry(30, 30, 30);
+const plane = new THREE.PlaneGeometry(35, 35, 1);
+const checkpoint = new THREE.PlaneGeometry(35, 5, 5);
+const tanah = new THREE.BoxGeometry(35, 30, 35);
 
 const grass_texture = new THREE.TextureLoader().load('./texture/rumput.jpg');
 const tanah_texture = new THREE.TextureLoader().load('./texture/tanah.jpg');
@@ -89,7 +98,7 @@ const mat_rumput = new THREE.MeshPhongMaterial({
 });
 
 let mesh_checkpoint = new THREE.Mesh(checkpoint, mat_checkpoint);
-mesh_checkpoint.position.set(0, 0.05, -12.5);
+mesh_checkpoint.position.set(0, 0.05, -15);
 scene.add(mesh_checkpoint);
 mesh_checkpoint.rotation.x -= Math.PI / 2;
 
@@ -307,6 +316,8 @@ function draw() {
             }
         }
     }
+    let delta = clock.getDelta();
+    mixer.update(delta);
 }
 
 draw();
