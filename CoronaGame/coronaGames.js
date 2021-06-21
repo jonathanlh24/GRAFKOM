@@ -162,25 +162,25 @@ document.addEventListener('keydown', function (event) {
     // ATAS = W
     if (event.keyCode == 87) {
         console.log("W");
-        person.position.z -= 1;
+        person.position.z -= 4.5;
     }
 
     // KIRI = A
     else if (event.keyCode == 65) {
         console.log("A");
-        person.position.x -= 1;
+        person.position.x -= 2;
     }
 
     // BAWAH = S
     else if (event.keyCode == 83) {
         console.log("S");
-        person.position.z += 1;
+        person.position.z += 4.5;
     }
 
     // KANAN = D
     else if (event.keyCode == 68) {
         console.log("D");
-        person.position.x += 1;
+        person.position.x += 2;
     }
 
     // ROTATE KIRI = Q
