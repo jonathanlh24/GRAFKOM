@@ -262,15 +262,36 @@ function draw() {
     checkCollision(virus_4, person)||
     checkCollision(virus_5, person)||
     checkCollision(virus_6, person)) {
-        alert("GAME OVER");
-        location.replace("coronaGames.html");
+        Swal.fire({
+            title: 'YOU ARE FAILED, TRY AGAIN?',
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: `TRY AGAIN`,
+            denyButtonText: `RESTART GAME`,
+          }).then((result) => {
+            if (result.isConfirmed) {
+              location.reload()
+            } else if (result.isDenied) {
+                location.replace("coronaGames.html");
+            }
+          })
     } else if (person.position.x > 15 || person.position.x < -15 || person.position.z > 15 || person.position.z < -15) {
-        alert("GAME OVER");
-        location.replace("coronaGames.html");
+        Swal.fire({
+            title: 'YOU ARE FALL OUT OF CLIFF, TRY AGAIN?',
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: `TRY AGAIN`,
+            denyButtonText: `RESTART GAME`,
+          }).then((result) => {
+            if (result.isConfirmed) {
+              location.reload()
+            } else if (result.isDenied) {
+                location.replace("coronaGames.html");
+            }
+          })
       }
     else if (person.position.z <= -11) {
-        alert("LEVEL UP")
-        location.replace("coronaGames.html");
+        Swal.fire('THANKS FOR PLAYING THIS GAME!')
     }
     else {
         requestAnimationFrame(draw);

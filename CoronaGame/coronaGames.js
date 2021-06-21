@@ -242,15 +242,48 @@ function draw() {
      checkCollision(virus_2, person)||
     checkCollision(virus_3, person)||
     checkCollision(virus_4, person)) {
-        alert("GAME OVER");
-        location.replace("coronaGames.html");
+        Swal.fire({
+            title: 'YOU ARE FAILED, TRY AGAIN?',
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: `TRY AGAIN`,
+            denyButtonText: `RESTART GAME`,
+          }).then((result) => {
+            if (result.isConfirmed) {
+              location.reload()
+            } else if (result.isDenied) {
+                location.replace("coronaGames.html");
+            }
+          })
     } else if (person.position.x > 15 || person.position.x < -15 || person.position.z > 15 || person.position.z < -15) {
-        alert("GAME OVER");
-        location.reload("coronaGames.html");
+        Swal.fire({
+            title: 'YOU ARE FALL OUT OF CLIFF, TRY AGAIN?',
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: `TRY AGAIN`,
+            denyButtonText: `RESTART GAME`,
+          }).then((result) => {
+            if (result.isConfirmed) {
+              location.reload()
+            } else if (result.isDenied) {
+                location.replace("coronaGames.html");
+            }
+          })
       }
     else if (person.position.z <= -11) {
-        alert("LEVEL UP")
-        location.replace("coronaGames_2.html");
+        Swal.fire({
+            title: 'YOU ARE LEVEL UP, CONTINUE?',
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: `YES`,
+            denyButtonText: `TRY AGAIN`,
+          }).then((result) => {
+            if (result.isConfirmed) {
+              location.replace("coronaGames_2.html")
+            } else if (result.isDenied) {
+                location.replace("coronaGames.html");
+            }
+          })
     }
     else {
         requestAnimationFrame(draw);
