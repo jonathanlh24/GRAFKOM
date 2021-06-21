@@ -10,14 +10,24 @@ renderer.setSize(innerWidth, innerHeight);
 document.body.appendChild(renderer.domElement);
 
 cam.position.z = 30;
-cam.position.y = 15;
+cam.position.y = 20;
+
+var person = new THREE.Object3D();
+var virus_1 = new THREE.Object3D();
+var virus_2 = new THREE.Object3D();
+var virus_3 = new THREE.Object3D();
+var virus_4 = new THREE.Object3D();
 
 const color = new THREE.Color(0x00ff00);
+
+let grid = new THREE.GridHelper(30,7, 0x000000, 0x000000);
+grid.position.set(0,0,0);
+scene.add(grid);
 
 let virus_loader1 = new THREE.GLTFLoader();
 virus_loader1.load("Virus-1/scene.gltf", function (gltf) {
     virus_1 = gltf.scene;
-    virus_1.scale.set(0.01, 0.01, 0.01);
+    virus_1.scale.set(0.015, 0.015, 0.015);
     virus_1.position.set(0, 1, 10);
     scene.add(virus_1);
 });
@@ -25,7 +35,7 @@ virus_loader1.load("Virus-1/scene.gltf", function (gltf) {
 let virus_loader2 = new THREE.GLTFLoader();
 virus_loader2.load("Virus-1/scene.gltf", function (gltf) {
     virus_2 = gltf.scene;
-    virus_2.scale.set(0.01, 0.01, 0.01);
+    virus_2.scale.set(0.015, 0.015, 0.015);
     virus_2.position.set(0, 1, 5);
     scene.add(virus_2);
 });
@@ -33,7 +43,7 @@ virus_loader2.load("Virus-1/scene.gltf", function (gltf) {
 let virus_loader3 = new THREE.GLTFLoader();
 virus_loader3.load("Virus-1/scene.gltf", function (gltf) {
     virus_3 = gltf.scene;
-    virus_3.scale.set(0.01, 0.01, 0.01);
+    virus_3.scale.set(0.015, 0.015, 0.015);
     virus_3.position.set(0, 1, 0);
     scene.add(virus_3);
 });
@@ -41,7 +51,7 @@ virus_loader3.load("Virus-1/scene.gltf", function (gltf) {
 let virus_loader4 = new THREE.GLTFLoader();
 virus_loader4.load("Virus-1/scene.gltf", function (gltf) {
     virus_4 = gltf.scene;
-    virus_4.scale.set(0.01, 0.01, 0.01);
+    virus_4.scale.set(0.015, 0.015, 0.015);
     virus_4.position.set(0, 1, -5);
     scene.add(virus_4);
 });
@@ -50,12 +60,14 @@ let loader = new THREE.GLTFLoader();
 loader.load("Person/scene.gltf", function (gltf) {
     person = gltf.scene;
     person.scale.set(0.01, 0.01, 0.01);
-    person.position.set(0, 0.1, 13);
+    person.position.set(0, 0.1, 15);
     scene.add(person);
 });
 
 
 let controls = new THREE.OrbitControls(cam, renderer.domElement);
+controls.update();
+controls.enabled = false;
 
 const plane = new THREE.PlaneGeometry(30, 30, 1);
 const checkpoint = new THREE.PlaneGeometry(30, 5, 5);
@@ -151,36 +163,32 @@ light12.position.set(30, 0, 0);
 scene.add(light12);
 scene.add(new THREE.PointLightHelper(light8, 1.0, 0x0000ff));
 
-var person = new THREE.Object3D();
-var virus_1 = new THREE.Object3D();
-var virus_2 = new THREE.Object3D();
-var virus_3 = new THREE.Object3D();
-var virus_4 = new THREE.Object3D();
+
 
 // Controller
 document.addEventListener('keydown', function (event) {
     // ATAS = W
     if (event.keyCode == 87) {
         console.log("W");
-        person.position.z -= 4.5;
+        person.position.z -= 5;
     }
 
     // KIRI = A
     else if (event.keyCode == 65) {
         console.log("A");
-        person.position.x -= 2;
+        person.position.x -= 5;
     }
 
     // BAWAH = S
     else if (event.keyCode == 83) {
         console.log("S");
-        person.position.z += 4.5;
+        person.position.z += 5;
     }
 
     // KANAN = D
     else if (event.keyCode == 68) {
         console.log("D");
-        person.position.x += 2;
+        person.position.x += 5;
     }
 
     // ROTATE KIRI = Q
@@ -195,18 +203,43 @@ document.addEventListener('keydown', function (event) {
         console.log(person.rotation.y);
     }
 })
-
 let checker = "kanan";
 let checker2 = "kanan";
 let checker3 = "kanan";
 let checker4 = "kanan";
+person.position.x =0.1;
+person.position.y = 0.1; 
+person.position.z = 0.1;
+
+
+
+function checkCollision(virus, person) {
+    
+    if (
+        person.position.x == Math.round(virus.position.x) &&
+        person.position.z == Math.round(virus.position.z)
+    ) {
+      return true;
+    }else{
+    return false;
+    }
+  }
+
+
 
 function draw() {
 
-    if (person.position.x > 15 || person.position.x < -15 || person.position.z > 15 || person.position.z < -15) {
+    if (checkCollision(virus_1, person) ||
+     checkCollision(virus_2, person)||
+    checkCollision(virus_3, person)||
+    checkCollision(virus_4, person)) {
         alert("GAME OVER");
         location.reload();
-    } else if (person.position.z <= -11) {
+    } else if (person.position.x > 15 || person.position.x < -15 || person.position.z > 15 || person.position.z < -15) {
+        alert("GAME OVER");
+        location.reload();
+      }
+    else if (person.position.z <= -11) {
         alert("CHECK POINT")
         location.reload();
     }
@@ -222,7 +255,7 @@ function draw() {
                 virus_1.position.x += 0.2;
             }
         } else if (checker == "kiri") {
-            if (posisi < -10) {
+            if (posisi < -15) {
                 checker = "kanan";
             } else {
                 virus_1.position.x -= 0.2;
@@ -237,7 +270,7 @@ function draw() {
                 virus_2.position.x += 0.3;
             }
         } else if (checker2 == "kiri") {
-            if (posisi2 < -10) {
+            if (posisi2 < -15) {
                 checker2 = "kanan";
             } else {
                 virus_2.position.x -= 0.3;
@@ -252,7 +285,7 @@ function draw() {
                 virus_3.position.x += 0.4;
             }
         } else if (checker3 == "kiri") {
-            if (posisi3 < -10) {
+            if (posisi3 < -15) {
                 checker3 = "kanan";
             } else {
                 virus_3.position.x -= 0.4;
@@ -267,13 +300,12 @@ function draw() {
                 virus_4.position.x += 0.5;
             }
         } else if (checker4 == "kiri") {
-            if (posisi4 < -10) {
+            if (posisi4 < -15) {
                 checker4 = "kanan";
             } else {
                 virus_4.position.x -= 0.5;
             }
         }
-        console.log(checker)
     }
 }
 
