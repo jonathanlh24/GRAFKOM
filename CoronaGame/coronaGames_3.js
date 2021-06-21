@@ -18,6 +18,7 @@ var virus_2 = new THREE.Object3D();
 var virus_3 = new THREE.Object3D();
 var virus_4 = new THREE.Object3D();
 var virus_5 = new THREE.Object3D();
+var virus_6 = new THREE.Object3D();
 
 var mixer = new THREE.AnimationMixer(person);
 const clock = new THREE.Clock();
@@ -68,6 +69,13 @@ virus_loader5.load("Virus-1/scene.gltf", function (gltf) {
     virus_5.scale.set(0.015, 0.015, 0.015);
     virus_5.position.set(-15, 1, 0);
     scene.add(virus_5);
+});
+let virus_loader6 = new THREE.GLTFLoader();
+virus_loader6.load("Virus-1/scene.gltf", function (gltf) {
+    virus_6 = gltf.scene;
+    virus_6.scale.set(0.015, 0.015, 0.015);
+    virus_6.position.set(15, 1, 0);
+    scene.add(virus_6);
 });
 
 let loader = new THREE.GLTFLoader();
@@ -225,6 +233,7 @@ let checker2 = "kanan";
 let checker3 = "kiri";
 let checker4 = "kiri";
 let checker5 = "kanan";
+let checker6 = "kiri";
 person.position.x =0.1;
 person.position.y = 0.1; 
 person.position.z = 0.1;
@@ -251,7 +260,8 @@ function draw() {
      checkCollision(virus_2, person)||
     checkCollision(virus_3, person)||
     checkCollision(virus_4, person)||
-    checkCollision(virus_5, person)) {
+    checkCollision(virus_5, person)||
+    checkCollision(virus_6, person)) {
         alert("GAME OVER");
         location.replace("coronaGames.html");
     } else if (person.position.x > 15 || person.position.x < -15 || person.position.z > 15 || person.position.z < -15) {
@@ -260,7 +270,7 @@ function draw() {
       }
     else if (person.position.z <= -11) {
         alert("LEVEL UP")
-        location.replace("coronaGames_3.html");
+        location.replace("coronaGames.html");
     }
     else {
         requestAnimationFrame(draw);
@@ -271,13 +281,13 @@ function draw() {
             if (posisi > 10) {
                 checker = "kiri";
             } else {
-                virus_1.position.x += 0.5;
+                virus_1.position.x += 0.8;
             }
         } else if (checker == "kiri") {
             if (posisi < -10) {
                 checker = "kanan";
             } else {
-                virus_1.position.x -= 0.5;
+                virus_1.position.x -= 0.8;
             }
         }
 
@@ -286,13 +296,13 @@ function draw() {
             if (posisi2 > 10) {
                 checker2 = "kiri";
             } else {
-                virus_2.position.x += 0.5;
+                virus_2.position.x += 0.8;
             }
         } else if (checker2 == "kiri") {
             if (posisi2 < -10) {
                 checker2 = "kanan";
             } else {
-                virus_2.position.x -= 0.5;
+                virus_2.position.x -= 0.8;
             }
         }
 
@@ -301,13 +311,13 @@ function draw() {
             if (posisi3 > 10) {
                 checker3 = "kiri";
             } else {
-                virus_3.position.x += 0.5;
+                virus_3.position.x += 0.8;
             }
         } else if (checker3 == "kiri") {
             if (posisi3 < -10) {
                 checker3 = "kanan";
             } else {
-                virus_3.position.x -= 0.5;
+                virus_3.position.x -= 0.8;
             }
         }
 
@@ -316,13 +326,13 @@ function draw() {
             if (posisi4 > 10) {
                 checker4 = "kiri";
             } else {
-                virus_4.position.x += 0.5;
+                virus_4.position.x += 0.8;
             }
         } else if (checker4 == "kiri") {
             if (posisi4 < -10) {
                 checker4 = "kanan";
             } else {
-                virus_4.position.x -= 0.5;
+                virus_4.position.x -= 0.8;
             }
         }
 
@@ -331,13 +341,27 @@ function draw() {
             if (posisi5 > 10) {
                 checker5 = "kiri";
             } else {
-                virus_5.position.z += 0.5;
+                virus_5.position.z += 0.8;
             }
         } else if (checker5 == "kiri") {
             if (posisi5 < -8) {
                 checker5 = "kanan";
             } else {
-                virus_5.position.z -= 0.5;
+                virus_5.position.z -= 0.8;
+            }
+        }
+        let posisi6 = virus_6.position.z;
+        if (checker6 == "kanan") {
+            if (posisi6 > 10) {
+                checker6 = "kiri";
+            } else {
+                virus_6.position.z += 0.8;
+            }
+        } else if (checker6 == "kiri") {
+            if (posisi6 < -8) {
+                checker6 = "kanan";
+            } else {
+                virus_6.position.z -= 0.8;
             }
         }
     }
