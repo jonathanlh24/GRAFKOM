@@ -56,6 +56,7 @@ virus_loader4.load("Virus-1/scene.gltf", function (gltf) {
     scene.add(virus_4);
 });
 
+
 let loader = new THREE.GLTFLoader();
 loader.load("Person/scene.gltf", function (gltf) {
     person = gltf.scene;
@@ -237,11 +238,11 @@ function draw() {
         location.replace("coronaGames.html");
     } else if (person.position.x > 15 || person.position.x < -15 || person.position.z > 15 || person.position.z < -15) {
         alert("GAME OVER");
-        location.reload("coronaGames.html");
+        location.replace("coronaGames.html");
       }
     else if (person.position.z <= -11) {
         alert("LEVEL UP")
-        location.replace("coronaGames_2.html");
+        location.replace("coronaGames.html");
     }
     else {
         requestAnimationFrame(draw);
@@ -252,13 +253,13 @@ function draw() {
             if (posisi > 10) {
                 checker = "kiri";
             } else {
-                virus_1.position.x += 0.2;
+                virus_1.position.x += 0.5;
             }
         } else if (checker == "kiri") {
             if (posisi < -15) {
                 checker = "kanan";
             } else {
-                virus_1.position.x -= 0.2;
+                virus_1.position.x -= 0.5;
             }
         }
 
@@ -267,13 +268,13 @@ function draw() {
             if (posisi2 > 10) {
                 checker2 = "kiri";
             } else {
-                virus_2.position.x += 0.3;
+                virus_2.position.x += 0.5;
             }
         } else if (checker2 == "kiri") {
             if (posisi2 < -15) {
                 checker2 = "kanan";
             } else {
-                virus_2.position.x -= 0.3;
+                virus_2.position.x -= 0.5;
             }
         }
 
@@ -282,13 +283,13 @@ function draw() {
             if (posisi3 > 10) {
                 checker3 = "kiri";
             } else {
-                virus_3.position.x += 0.4;
+                virus_3.position.x += 0.5;
             }
         } else if (checker3 == "kiri") {
             if (posisi3 < -15) {
                 checker3 = "kanan";
             } else {
-                virus_3.position.x -= 0.4;
+                virus_3.position.x -= 0.5;
             }
         }
 
