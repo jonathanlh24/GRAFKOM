@@ -115,62 +115,62 @@ scene.add(mesh_tanah);
 let light1 = new THREE.PointLight(0xffffff, 0.5);
 light1.position.set(-15, 15, -15);
 scene.add(light1);
-scene.add(new THREE.PointLightHelper(light1, 1.0, 0x0000ff));
+
 
 let light2 = new THREE.PointLight(0xffffff, 0.5);
 light2.position.set(-15, 15, 15);
 scene.add(light2);
-scene.add(new THREE.PointLightHelper(light2, 1.0, 0x0000ff));
+
 
 let light3 = new THREE.PointLight(0xffffff, 0.5);
 light3.position.set(15, 15, 15);
 scene.add(light3);
-scene.add(new THREE.PointLightHelper(light3, 1.0, 0x0000ff));
+
 
 let light4 = new THREE.PointLight(0xffffff, 0.5);
 light4.position.set(15, 15, -15);
 scene.add(light4);
-scene.add(new THREE.PointLightHelper(light4, 1.0, 0x0000ff));
+
 
 let light5 = new THREE.PointLight(0xffffff, 0.5);
 light5.position.set(15, -15, 15);
 scene.add(light5);
-scene.add(new THREE.PointLightHelper(light5, 1.0, 0x0000ff));
+
 
 let light6 = new THREE.PointLight(0xffffff, 0.5);
 light6.position.set(15, -15, -15);
 scene.add(light6);
-scene.add(new THREE.PointLightHelper(light6, 1.0, 0x0000ff));
+
 
 let light7 = new THREE.PointLight(0xffffff, 0.5);
 light7.position.set(-15, -15, 15);
 scene.add(light7);
-scene.add(new THREE.PointLightHelper(light7, 1.0, 0x0000ff));
+
 
 let light8 = new THREE.PointLight(0xffffff, 0.5);
 light8.position.set(-15, -15, -15);
 scene.add(light8);
-scene.add(new THREE.PointLightHelper(light8, 1.0, 0x0000ff));
+
 
 let light9 = new THREE.PointLight(0xffffff, 0.5); //front center
 light9.position.set(0, 0, 30);
 scene.add(light9);
-scene.add(new THREE.PointLightHelper(light9, 1.0, 0x0000ff));
+
 
 let light10 = new THREE.PointLight(0xffffff, 0.5); //back center
 light10.position.set(0, 0, -30);
 scene.add(light10);
-scene.add(new THREE.PointLightHelper(light8, 1.0, 0x0000ff));
+
 
 let light11 = new THREE.PointLight(0xffffff, 0.5); //left
 light11.position.set(-30, 0, 0);
 scene.add(light11);
-scene.add(new THREE.PointLightHelper(light8, 1.0, 0x0000ff));
+
 
 let light12 = new THREE.PointLight(0xffffff, 0.5); //right
 light12.position.set(30, 0, 0);
 scene.add(light12);
-scene.add(new THREE.PointLightHelper(light8, 1.0, 0x0000ff));
+
 
 
 
