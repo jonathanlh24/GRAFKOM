@@ -9,3 +9,5 @@ Kami menggunakan library sweetalert di folder /dist untuk membuat alert yang leb
 source code sweet alert dapat dilihat di https://sweetalert2.github.io/
 
 Kami melihat contoh algoritma pada video https://youtu.be/8n_v1aJmLmc untuk membuat animasi pada gtlf
+
+Kami melihat contoh algoritma pada video https://youtu.be/XYzA_kPWyJ8 untuk membuat fungsi checkCollisions
